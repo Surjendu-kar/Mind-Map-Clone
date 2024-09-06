@@ -17,6 +17,7 @@ import {
 } from "@mui/icons-material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import AssignmentReturnedIcon from "@mui/icons-material/AssignmentReturned";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -67,9 +68,13 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {},
 }));
 
-const StyledListItem = styled(ListItem)(({ theme }) => ({
+const StyledListItem = styled(Link)(({ theme }) => ({
   display: "flex",
+  alignItems: "center",
   padding: "8px 20px",
+  textDecoration: "none",
+  color: theme.palette.text.primary,
+
   "&:hover": {
     backgroundColor: "rgba(0, 0, 0, 0.04)",
   },
@@ -80,17 +85,22 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  // const location = useLocation();
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
 
   const menuItems = [
-    { text: "Explore Chats", icon: <AssignmentReturnedIcon /> },
-    { text: "Business Leads", icon: <BusinessIcon /> },
-    { text: "View Mind Map", icon: <MindMapIcon /> },
-    { text: "Manage Team", icon: <TeamIcon /> },
-    { text: "Configure Chatbot", icon: <ConfigureIcon /> },
+    {
+      text: "Explore Chats",
+      icon: <AssignmentReturnedIcon />,
+      path: "/explore",
+    },
+    { text: "Business Leads", icon: <BusinessIcon />, path: "/leads" },
+    { text: "View Mind Map", icon: <MindMapIcon />, path: "/mindmap" },
+    { text: "Manage Team", icon: <TeamIcon />, path: "/team" },
+    { text: "Configure Chatbot", icon: <ConfigureIcon />, path: "/configure" },
   ];
 
   return (
@@ -107,7 +117,16 @@ const Navbar = () => {
         </Menu>
 
         {menuItems.map((item, index) => (
-          <StyledListItem key={index} disablePadding>
+          <StyledListItem
+            key={index}
+            to={item.path}
+            // style={{
+            //   backgroundColor:
+            //     location.pathname === item.path
+            //       ? "rgba(0, 0, 0, 0.08)"
+            //       : "transparent",
+            // }}
+          >
             <ListItemIcon
               sx={{
                 minWidth: 0,
