@@ -7,6 +7,7 @@ import {
   ListItemText,
   IconButton,
   styled,
+  Tooltip,
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
@@ -96,37 +97,51 @@ const Sidebar = () => {
     <StyledDrawer variant="permanent" isOpen={open}>
       <List>
         <Menu disablePadding isOpen={open}>
-          <StyledIconButton onClick={handleDrawerToggle}>
-            {open ? (
-              <ArrowBackIosNewIcon sx={{ fontSize: "15px" }} />
-            ) : (
-              <MenuIcon />
-            )}
-          </StyledIconButton>
+          <Tooltip
+            title={open ? "Close Left Drawer" : "Open Left Drawer"}
+            placement="bottom"
+            arrow
+          >
+            <StyledIconButton onClick={handleDrawerToggle}>
+              {open ? (
+                <ArrowBackIosNewIcon sx={{ fontSize: "15px" }} />
+              ) : (
+                <MenuIcon />
+              )}
+            </StyledIconButton>
+          </Tooltip>
         </Menu>
 
         {menuItems.map((item, index) => {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
           return (
-            <StyledListItem active={isActive} key={index} to={item.path}>
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 2 : "auto",
-                  justifyContent: "center",
-                  color: isActive
-                    ? (theme) => theme.palette.primary.main
-                    : "#0000008a",
-                }}
-              >
-                <Icon />
-              </ListItemIcon>
-              <ListItemText
-                primary={item.text}
-                sx={{ opacity: open ? 1 : 0, transition: "opacity 0.2s" }}
-              />
-            </StyledListItem>
+            <Tooltip
+              key={index}
+              title={item.text}
+              placement="right"
+              arrow
+              disableHoverListener={open}
+            >
+              <StyledListItem active={isActive} to={item.path}>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 2 : "auto",
+                    justifyContent: "center",
+                    color: isActive
+                      ? (theme) => theme.palette.primary.main
+                      : "#0000008a",
+                  }}
+                >
+                  <Icon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0, transition: "opacity 0.2s" }}
+                />
+              </StyledListItem>
+            </Tooltip>
           );
         })}
       </List>

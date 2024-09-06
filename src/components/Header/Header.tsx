@@ -9,6 +9,7 @@ import {
   styled,
   Menu,
   ListItemIcon,
+  Tooltip,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link } from "react-router-dom";
@@ -164,22 +165,26 @@ const Header: React.FC<HeaderProps> = ({ heading, title }) => {
 
       <ActionsContainer>
         <StyledButton variant="outlined">GUIDED TOUR</StyledButton>
-        <StyledSelect
-          defaultValue="org"
-          size="small"
-          IconComponent={KeyboardArrowDownIcon}
-        >
-          <MenuItem value="org">SELECT ORG</MenuItem>
-        </StyledSelect>
+        <Tooltip title="View Orgs" arrow placement="bottom">
+          <StyledSelect
+            defaultValue="org"
+            size="small"
+            IconComponent={KeyboardArrowDownIcon}
+          >
+            <MenuItem value="org">SELECT ORG</MenuItem>
+          </StyledSelect>
+        </Tooltip>
 
-        <StyledAvatar
-          src={
-            "https://api.dicebear.com/5.x/micah/svg?seed=beyondchat@gmail.com"
-          }
-          alt="User Avatar"
-          onClick={handleClick}
-          sx={{ cursor: "pointer" }}
-        />
+        <Tooltip title="Open Menu" arrow placement="bottom-end">
+          <StyledAvatar
+            src={
+              "https://api.dicebear.com/5.x/micah/svg?seed=beyondchat@gmail.com"
+            }
+            alt="User Avatar"
+            onClick={handleClick}
+            sx={{ cursor: "pointer" }}
+          />
+        </Tooltip>
         <StyledMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
           {menuItems.map((item, index) => {
             const Icon = item.icon;
