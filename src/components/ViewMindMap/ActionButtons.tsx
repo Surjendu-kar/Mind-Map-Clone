@@ -15,6 +15,9 @@ const ButtonsContainer = styled(Box)(({ theme }) => ({
 const StyledButton = styled(Button)(({ theme }) => ({
   fontSize: "0.95rem",
   textTransform: "none",
+  ":hover": {
+    background: "#333bc7",
+  },
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
   [theme.breakpoints.down("sm")]: {},
@@ -25,16 +28,7 @@ const ActionButtons = () => {
 
   return (
     <ButtonsContainer>
-      <StyledButton
-        variant="contained"
-        color="primary"
-        startIcon={<AddIcon />}
-        sx={{
-          ":hover": {
-            background: "#333bc7",
-          },
-        }}
-      >
+      <StyledButton variant="contained" color="primary" startIcon={<AddIcon />}>
         ADD DATA
       </StyledButton>
       <StyledButton

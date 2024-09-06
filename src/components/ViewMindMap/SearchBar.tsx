@@ -44,6 +44,9 @@ const BtnStyle = styled(Button)(({ theme }) => ({
   padding: "9px 28px",
   fontSize: "0.8rem",
   fontWeight: "bold",
+  ":hover": {
+    background: "#333bc7",
+  },
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
   [theme.breakpoints.down("sm")]: {},
@@ -89,16 +92,7 @@ const SearchBar: React.FC = () => {
           ))}
         </Select>
       </CustomFormControl>
-      <BtnStyle
-        variant="contained"
-        color="primary"
-        onClick={handleSearch}
-        sx={{
-          ":hover": {
-            background: "#333bc7",
-          },
-        }}
-      >
+      <BtnStyle variant="contained" color="primary" onClick={handleSearch}>
         Search
       </BtnStyle>
     </Box>
