@@ -17,12 +17,15 @@ import {
 } from "@mui/icons-material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import AssignmentReturnedIcon from "@mui/icons-material/AssignmentReturned";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 
 interface OpenProps {
   isOpen: boolean;
+}
+interface ActiveProps {
+  active: boolean;
 }
 
 const StyledDrawer = styled(Drawer, {
@@ -68,15 +71,19 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {},
 }));
 
-const StyledListItem = styled(Link)(({ theme }) => ({
+const StyledListItem = styled(Link, {
+  shouldForwardProp: (prop) => prop !== "active",
+})<ActiveProps>(({ theme, active }) => ({
   display: "flex",
   alignItems: "center",
   padding: "8px 20px",
   textDecoration: "none",
   color: theme.palette.text.primary,
-
+  backgroundColor: active ? `#e3f2ff` : "transparent",
   "&:hover": {
-    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    backgroundColor: active
+      ? `${theme.palette.primary.main}0a`
+      : "rgba(0, 0, 0, 0.04)",
   },
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
@@ -85,7 +92,7 @@ const StyledListItem = styled(Link)(({ theme }) => ({
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
-  // const location = useLocation();
+  const location = useLocation();
 
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -116,32 +123,29 @@ const Sidebar = () => {
           </StyledIconButton>
         </Menu>
 
-        {menuItems.map((item, index) => (
-          <StyledListItem
-            key={index}
-            to={item.path}
-            // style={{
-            //   backgroundColor:
-            //     location.pathname === item.path
-            //       ? "rgba(0, 0, 0, 0.08)"
-            //       : "transparent",
-            // }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: open ? 2 : "auto",
-                justifyContent: "center",
-              }}
-            >
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText
-              primary={item.text}
-              sx={{ opacity: open ? 1 : 0, transition: "opacity 0.2s" }}
-            />
-          </StyledListItem>
-        ))}
+        {menuItems.map((item, index) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <StyledListItem active={isActive} key={index} to={item.path}>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 2 : "auto",
+                  justifyContent: "center",
+                  color: isActive
+                    ? (theme) => theme.palette.primary.main
+                    : "inherit",
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={item.text}
+                sx={{ opacity: open ? 1 : 0, transition: "opacity 0.2s" }}
+              />
+            </StyledListItem>
+          );
+        })}
       </List>
     </StyledDrawer>
   );
