@@ -73,10 +73,9 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 interface HeaderProps {
   heading: string;
   title: string;
-  avatarSrc?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ heading, title, avatarSrc }) => {
+const Header: React.FC<HeaderProps> = ({ heading, title }) => {
   return (
     <MainContainer>
       <InfoContainer>
