@@ -10,13 +10,13 @@ import {
 } from "@mui/material";
 import {
   Menu as MenuIcon,
-  Business as BusinessIcon,
-  AccountTree as MindMapIcon,
-  Group as TeamIcon,
   Settings as ConfigureIcon,
 } from "@mui/icons-material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import AssignmentReturnedIcon from "@mui/icons-material/AssignmentReturned";
+import MoveToInboxIcon from "@mui/icons-material/MoveToInbox";
+import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
+import GroupsIcon from "@mui/icons-material/Groups";
+import TableChartIcon from "@mui/icons-material/TableChart";
 import { Link, useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -101,12 +101,12 @@ const Sidebar = () => {
   const menuItems = [
     {
       text: "Explore Chats",
-      icon: <AssignmentReturnedIcon />,
+      icon: <MoveToInboxIcon />,
       path: "/explore",
     },
-    { text: "Business Leads", icon: <BusinessIcon />, path: "/leads" },
-    { text: "View Mind Map", icon: <MindMapIcon />, path: "/mindmap" },
-    { text: "Manage Team", icon: <TeamIcon />, path: "/team" },
+    { text: "Business Leads", icon: <ContactPhoneIcon />, path: "/leads" },
+    { text: "View Mind Map", icon: <TableChartIcon />, path: "/mindmap" },
+    { text: "Manage Team", icon: <GroupsIcon />, path: "/team" },
     { text: "Configure Chatbot", icon: <ConfigureIcon />, path: "/configure" },
   ];
 
@@ -134,7 +134,7 @@ const Sidebar = () => {
                   justifyContent: "center",
                   color: isActive
                     ? (theme) => theme.palette.primary.main
-                    : "inherit",
+                    : "#0000008a",
                 }}
               >
                 {item.icon}
