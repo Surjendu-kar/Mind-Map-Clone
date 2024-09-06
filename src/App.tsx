@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
-import Navbar from "./components/Navbar/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
 import ExploreChats from "./components/ExploreChats/ExploreChats";
 import BusinessLeads from "./components/BusinessLeads/BusinessLeads";
 import ViewMindMap from "./components/ViewMindMap/ViewMindMap";
@@ -20,8 +20,8 @@ const App = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <Navbar />
-      <Box component="main">
+      <Sidebar />
+      <Box component="main" width={"100%"}>
         <Routes>
           <Route path="/explore" element={<ExploreChats />} />
           <Route path="/leads" element={<BusinessLeads />} />

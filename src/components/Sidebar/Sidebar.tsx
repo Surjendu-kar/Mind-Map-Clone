@@ -83,7 +83,7 @@ const StyledListItem = styled(Link)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {},
 }));
 
-const Navbar = () => {
+const Sidebar = () => {
   const [open, setOpen] = useState(false);
   // const location = useLocation();
 
@@ -147,4 +147,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Sidebar;
