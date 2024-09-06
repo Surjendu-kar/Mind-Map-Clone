@@ -1,11 +1,5 @@
 import { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { Box } from "@mui/material";
 import Navbar from "./components/Navbar/Navbar";
 import ExploreChats from "./components/ExploreChats/ExploreChats";
@@ -14,7 +8,7 @@ import ViewMindMap from "./components/ViewMindMap/ViewMindMap";
 import ManageTeam from "./components/ManageTeam/ManageTeam";
 import ConfigureChatbot from "./components/ConfigureChatbot/ConfigureChatbot";
 
-const AppContent = () => {
+const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,14 +31,6 @@ const AppContent = () => {
         </Routes>
       </Box>
     </Box>
-  );
-};
-
-const App = () => {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
   );
 };
 
