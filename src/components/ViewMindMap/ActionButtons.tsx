@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Box, Button, styled, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import HistoryIcon from "@mui/icons-material/History";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import AddDataDialog from "./AddDataDialog";
 
 const ButtonsContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -13,7 +15,7 @@ const ButtonsContainer = styled(Box)(({ theme }) => ({
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-  fontSize: "0.95rem",
+  fontSize: "0.93rem",
   textTransform: "none",
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
@@ -22,42 +24,58 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 const ActionButtons = () => {
   const theme = useTheme();
+  const [openAddDataDialog, setOpenAddDataDialog] = useState(false);
+
+  const handleOpenAddDataDialog = () => {
+    setOpenAddDataDialog(true);
+  };
+
+  const handleCloseAddDataDialog = () => {
+    setOpenAddDataDialog(false);
+  };
 
   return (
-    <ButtonsContainer>
-      <StyledButton
-        variant="contained"
-        color="primary"
-        startIcon={<AddIcon />}
-        sx={{
-          ":hover": {
-            background: "#333bc7",
-          },
-        }}
-      >
-        ADD DATA
-      </StyledButton>
-      <StyledButton
-        variant="contained"
-        color="secondary"
-        startIcon={<HistoryIcon />}
-      >
-        DATA TRAINING STATUS
-      </StyledButton>
-      <StyledButton
-        variant="outlined"
-        startIcon={<QuestionAnswerIcon />}
-        sx={{
-          borderColor: theme.palette.secondary.main,
-          color: theme.palette.secondary.main,
-          ":hover": {
-            background: `${theme.palette.secondary.main}0a`,
-          },
-        }}
-      >
-        GROUND TRUTHS
-      </StyledButton>
-    </ButtonsContainer>
+    <>
+      <ButtonsContainer>
+        <StyledButton
+          variant="contained"
+          color="primary"
+          startIcon={<AddIcon />}
+          onClick={handleOpenAddDataDialog}
+          sx={{
+            ":hover": {
+              background: "#333bc7",
+            },
+          }}
+        >
+          ADD DATA
+        </StyledButton>
+        <StyledButton
+          variant="contained"
+          color="secondary"
+          startIcon={<HistoryIcon />}
+        >
+          DATA TRAINING STATUS
+        </StyledButton>
+        <StyledButton
+          variant="outlined"
+          startIcon={<QuestionAnswerIcon />}
+          sx={{
+            borderColor: theme.palette.secondary.main,
+            color: theme.palette.secondary.main,
+            ":hover": {
+              background: `${theme.palette.secondary.main}0a`,
+            },
+          }}
+        >
+          GROUND TRUTHS
+        </StyledButton>
+      </ButtonsContainer>
+      <AddDataDialog
+        open={openAddDataDialog}
+        onClose={handleCloseAddDataDialog}
+      />
+    </>
   );
 };
 
