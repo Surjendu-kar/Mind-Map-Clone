@@ -71,6 +71,9 @@ const DataCellStyle = styled(Heading)<{ isSelected?: boolean }>(
     padding: theme.spacing(1.6, 1.8),
     textAlign: "left",
     border: isSelected ? `rgb(40, 114, 250) solid 1px` : "none",
+     whiteSpace: "pre-wrap",
+    wordBreak: "break-word",
+    maxWidth: "400px",
 
     [theme.breakpoints.down("lg")]: {},
     [theme.breakpoints.down("md")]: {},

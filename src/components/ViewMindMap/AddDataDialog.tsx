@@ -13,6 +13,8 @@ import {
   useTheme,
   Link,
   ButtonProps,
+  Snackbar,
+  SnackbarContent,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import PublishIcon from "@mui/icons-material/Publish";
@@ -138,6 +140,18 @@ const FileNameTypography = styled(Typography)(
   })
 );
 
+const StyledSnackbar = styled(Snackbar)(({ theme }) => ({
+  "& .MuiSnackbarContent-root": {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+  },
+}));
+
+const CloseButton = styled(IconButton)(({ theme }) => ({
+  padding: theme.spacing(0.5),
+  color: theme.palette.error.contrastText,
+}));
+
 const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
   const [activeTab, setActiveTab] = useState<string>("Text");
   const [title, setTitle] = useState<string>("");
@@ -145,6 +159,7 @@ const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
   const [sourceLink, setSourceLink] = useState<string>("");
   const [linkUrl, setLinkUrl] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const theme = useTheme();
 
@@ -153,9 +168,19 @@ const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
   };
 
   const handleSave = () => {
-    console.log(title, description, sourceLink, linkUrl, file);
-
+    // console.log(title, description, sourceLink, linkUrl, file);
+    setSnackbarOpen(true);
+    resetState();
     onClose();
+  };
+
+  const resetState = () => {
+    setActiveTab("Text");
+    setTitle("");
+    setDescription("");
+    setSourceLink("");
+    setLinkUrl("");
+    setFile(null);
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -165,6 +190,13 @@ const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
   };
   const handleDeleteFile = () => {
     setFile(null);
+  };
+
+  const handleSnackbarClose = (reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   const isSaveDisabled = useMemo(() => {
@@ -281,79 +313,102 @@ const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
   };
 
   return (
-    <StyledDialog open={open} onClose={onClose} fullWidth>
-      <StyledDialogTitle>
-        Add Data
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </StyledDialogTitle>
+    <>
+      <StyledDialog open={open} onClose={onClose} fullWidth>
+        <StyledDialogTitle>
+          Add Data
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </StyledDialogTitle>
 
-      <StyledDialogContent>
-        <TabBox>
-          {["Text", "PDF", "EPUB", "Link", "CSV"].map((tab) => (
-            <TabBtn
-              key={tab}
-              isActive={activeTab === tab}
-              variant={activeTab === tab ? "contained" : "outlined"}
-              onClick={() => handleTabChange(tab)}
+        <StyledDialogContent>
+          <TabBox>
+            {["Text", "PDF", "EPUB", "Link", "CSV"].map((tab) => (
+              <TabBtn
+                key={tab}
+                isActive={activeTab === tab}
+                variant={activeTab === tab ? "contained" : "outlined"}
+                onClick={() => handleTabChange(tab)}
+              >
+                {tab}
+              </TabBtn>
+            ))}
+          </TabBox>
+
+          {renderContent()}
+
+          <StyledTextField
+            fullWidth
+            label="Read More/Source Link"
+            variant="outlined"
+            value={sourceLink}
+            onChange={(e) => setSourceLink(e.target.value)}
+            sx={{ marginBottom: 0, marginTop: theme.spacing(2) }}
+          />
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ margin: "3px 14px 0px" }}
+          >
+            The Source or Read More link user gets at the end of the message
+          </Typography>
+        </StyledDialogContent>
+
+        <ButtonBox>
+          <Button
+            variant="outlined"
+            onClick={onClose}
+            sx={{
+              borderColor: theme.palette.secondary.main,
+              color: theme.palette.secondary.main,
+              ":hover": {
+                background: `${theme.palette.secondary.main}0a`,
+              },
+            }}
+          >
+            CANCEL
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleSave}
+            disabled={isSaveDisabled}
+          >
+            SAVE
+          </Button>
+        </ButtonBox>
+      </StyledDialog>
+
+      <StyledSnackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={(_, reason) => handleSnackbarClose(reason)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <SnackbarContent
+          message="unauthenticated"
+          action={
+            <CloseButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={() => handleSnackbarClose()}
             >
-              {tab}
-            </TabBtn>
-          ))}
-        </TabBox>
-
-        {renderContent()}
-
-        <StyledTextField
-          fullWidth
-          label="Read More/Source Link"
-          variant="outlined"
-          value={sourceLink}
-          onChange={(e) => setSourceLink(e.target.value)}
-          sx={{ marginBottom: 0, marginTop: theme.spacing(2) }}
+              <CloseIcon fontSize="small" />
+            </CloseButton>
+          }
         />
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          sx={{ margin: "3px 14px 0px" }}
-        >
-          The Source or Read More link user gets at the end of the message
-        </Typography>
-      </StyledDialogContent>
-
-      <ButtonBox>
-        <Button
-          variant="outlined"
-          onClick={onClose}
-          sx={{
-            borderColor: theme.palette.secondary.main,
-            color: theme.palette.secondary.main,
-            ":hover": {
-              background: `${theme.palette.secondary.main}0a`,
-            },
-          }}
-        >
-          CANCEL
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handleSave}
-          disabled={isSaveDisabled}
-        >
-          SAVE
-        </Button>
-      </ButtonBox>
-    </StyledDialog>
+      </StyledSnackbar>
+    </>
   );
 };
 

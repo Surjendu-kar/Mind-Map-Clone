@@ -43,5 +43,29 @@ export const useDemoData = (): DemoData[] => {
       type: "TEXT",
       created: "3/13/2024",
     },
+    {
+      data: "who are you My name is Bech! I am an AI chatbot and my job is to help you with any questions you may have about BeyondChats or our services.",
+      source: "--",
+      type: "TEXT",
+      created: "3/13/2024",
+    },
+    {
+      data: "Do you have live chat support? Yes, we do have live chat support, but we primarily focus on providing chatbot solutions that enhance customer interactions and offer instant responses 24/7.",
+      source: "--",
+      type: "TEXT",
+      created: "7/31/2024",
+    },
+    {
+      data: "I want to freeze my eggs. That's great, please choose from one of these 3 options.",
+      source: "--",
+      type: "TEXT",
+      created: "8/14/2024",
+    },
+    {
+      data: "I am trying to get pregnant.\nWe have helped thousands of couples over the years, and we would love to support you too. Please choose from one of these three options.",
+      source: "--",
+      type: "TEXT",
+      created: "8/14/2024",
+    },
   ];
 };
