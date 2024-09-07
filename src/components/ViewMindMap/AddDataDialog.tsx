@@ -216,17 +216,17 @@ const AddDataDialog: React.FC<AddDataDialogProps> = ({
   const isSaveDisabled = useMemo(() => {
     switch (activeTab) {
       case "Text":
-        return !title || !description || !sourceLink;
+        return !title;
       case "Link":
-        return !linkUrl || !sourceLink;
+        return !linkUrl;
       case "PDF":
       case "EPUB":
       case "CSV":
-        return !file || !sourceLink;
+        return !file;
       default:
         return true;
     }
-  }, [activeTab, title, description, sourceLink, linkUrl, file]);
+  }, [activeTab, title, linkUrl, file]);
 
   const renderContent = () => {
     switch (activeTab) {
