@@ -4,6 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import HistoryIcon from "@mui/icons-material/History";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import AddDataDialog from "./AddDataDialog";
+import GroundTruthsDialog from "./GroundTruthsDialog";
 
 const ButtonsContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -25,6 +26,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const ActionButtons = () => {
   const theme = useTheme();
   const [openAddDataDialog, setOpenAddDataDialog] = useState(false);
+  const [openGroundTruthsDialog, setOpenGroundTruthsDialog] = useState(false);
 
   const handleOpenAddDataDialog = () => {
     setOpenAddDataDialog(true);
@@ -32,6 +34,14 @@ const ActionButtons = () => {
 
   const handleCloseAddDataDialog = () => {
     setOpenAddDataDialog(false);
+  };
+
+  const handleOpenGroundTruthsDialog = () => {
+    setOpenGroundTruthsDialog(true);
+  };
+
+  const handleCloseGroundTruthsDialog = () => {
+    setOpenGroundTruthsDialog(false);
   };
 
   return (
@@ -60,6 +70,7 @@ const ActionButtons = () => {
         <StyledButton
           variant="outlined"
           startIcon={<QuestionAnswerIcon />}
+          onClick={handleOpenGroundTruthsDialog}
           sx={{
             borderColor: theme.palette.secondary.main,
             color: theme.palette.secondary.main,
@@ -71,9 +82,14 @@ const ActionButtons = () => {
           GROUND TRUTHS
         </StyledButton>
       </ButtonsContainer>
+
       <AddDataDialog
         open={openAddDataDialog}
         onClose={handleCloseAddDataDialog}
+      />
+      <GroundTruthsDialog
+        open={openGroundTruthsDialog}
+        onClose={handleCloseGroundTruthsDialog}
       />
     </>
   );
