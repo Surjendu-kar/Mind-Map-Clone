@@ -43,6 +43,7 @@ const StyledDialog = styled(Dialog)(({ theme }: { theme: Theme }) => ({
 const StyledDialogTitle = styled(DialogTitle)(
   ({ theme }: { theme: Theme }) => ({
     fontSize: "18px",
+    fontWeight: "bold",
 
     [theme.breakpoints.down("lg")]: {},
     [theme.breakpoints.down("md")]: {},
@@ -73,7 +74,8 @@ const TabBox = styled(Box)(({ theme }: { theme: Theme }) => ({
   },
 }));
 
-const TabBtn = styled(Button)(({ theme }: { theme: Theme }) => ({
+const TabBtn = styled(Button)<{ isActive: boolean }>(({ theme, isActive }) => ({
+  color: isActive ? "white" : "black",
   padding: theme.spacing(1, 2),
   border: `2px solid ${theme.palette.primary.main}`,
   [theme.breakpoints.down("lg")]: {},
@@ -299,6 +301,7 @@ const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
           {["Text", "PDF", "EPUB", "Link", "CSV"].map((tab) => (
             <TabBtn
               key={tab}
+              isActive={activeTab === tab}
               variant={activeTab === tab ? "contained" : "outlined"}
               onClick={() => handleTabChange(tab)}
             >
