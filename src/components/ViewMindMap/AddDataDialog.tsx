@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -23,6 +23,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 interface AddDataDialogProps {
   open: boolean;
   onClose: () => void;
+  editData?: string | null;
 }
 
 const StyledDialog = styled(Dialog)(({ theme }: { theme: Theme }) => ({
@@ -152,7 +153,11 @@ const CloseButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.error.contrastText,
 }));
 
-const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
+const AddDataDialog: React.FC<AddDataDialogProps> = ({
+  open,
+  onClose,
+  editData,
+}) => {
   const [activeTab, setActiveTab] = useState<string>("Text");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -162,6 +167,15 @@ const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const theme = useTheme();
+
+  useEffect(() => {
+    if (editData) {
+      setActiveTab("Text");
+      setTitle(editData);
+      setDescription("");
+      setSourceLink("");
+    }
+  }, [editData]);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);

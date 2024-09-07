@@ -20,6 +20,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useDemoData } from "./DemoData";
 import DeleteConfirmationDialog from "./DeleteConfirmationDialog";
+import AddDataDialog from "./AddDataDialog";
 
 const StyledTableContainer = styled(TableContainer)<
   TableContainerProps & { component?: React.ElementType }
@@ -71,7 +72,7 @@ const DataCellStyle = styled(Heading)<{ isSelected?: boolean }>(
     padding: theme.spacing(1.6, 1.8),
     textAlign: "left",
     border: isSelected ? `rgb(40, 114, 250) solid 1px` : "none",
-     whiteSpace: "pre-wrap",
+    whiteSpace: "pre-wrap",
     wordBreak: "break-word",
     maxWidth: "400px",
 
@@ -120,6 +121,8 @@ const DataTable = () => {
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
   const [selectedCell, setSelectedCell] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [addDataDialogOpen, setAddDataDialogOpen] = useState(false);
+  const [editingData, setEditingData] = useState<string | null>(null);
 
   const toggleRowExpansion = (index: number) => {
     setExpandedRows((prev) =>
@@ -141,6 +144,16 @@ const DataTable = () => {
 
   const handleDeleteCancel = () => {
     setDeleteDialogOpen(false);
+  };
+
+  const handleEditClick = (index: number) => {
+    setEditingData(rows[index].data);
+    setAddDataDialogOpen(true);
+  };
+
+  const handleCloseAddDataDialog = () => {
+    setAddDataDialogOpen(false);
+    setEditingData(null);
   };
 
   const rows = useDemoData();
@@ -230,6 +243,7 @@ const DataTable = () => {
                   <StyledIconButton
                     aria-label="edit"
                     sx={{ paddingRight: "8px" }}
+                    onClick={() => handleEditClick(index)}
                   >
                     <EditIcon />
                   </StyledIconButton>
@@ -252,6 +266,12 @@ const DataTable = () => {
         open={deleteDialogOpen}
         onClose={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
+      />
+
+      <AddDataDialog
+        open={addDataDialogOpen}
+        onClose={handleCloseAddDataDialog}
+        editData={editingData}
       />
     </>
   );
