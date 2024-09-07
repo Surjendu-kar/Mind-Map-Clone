@@ -2,6 +2,7 @@ import { Stack, styled } from "@mui/material";
 import Header from "../Header/Header";
 import ActionButtons from "./ActionButtons";
 import SearchBar from "./SearchBar";
+import DataTable from "./DataTable";
 
 const Container = styled(Stack)(({ theme }) => ({
   alignItems: "center",
@@ -37,6 +38,7 @@ function ViewMindMap() {
         <HrStyle />
         <SearchBar />
       </Container>
+      <DataTable />
     </>
   );
 }

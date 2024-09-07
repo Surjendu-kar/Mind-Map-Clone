@@ -153,6 +153,8 @@ const AddDataDialog: React.FC<AddDataDialogProps> = ({ open, onClose }) => {
   };
 
   const handleSave = () => {
+    console.log(title, description, sourceLink, linkUrl, file);
+
     onClose();
   };
 
