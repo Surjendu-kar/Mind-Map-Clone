@@ -9,8 +9,6 @@ import {
   InputLabel,
   SelectChangeEvent,
   styled,
-  useTheme,
-  useMediaQuery,
 } from "@mui/material";
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
@@ -54,8 +52,6 @@ const BtnStyle = styled(Button)(() => ({
 const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [resultsCount, setResultsCount] = useState<string>("3");
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSearch = (): void => {
     console.log(
@@ -77,7 +73,7 @@ const SearchBar: React.FC = () => {
       alignItems="center"
       gap={1}
       mt="8px"
-      justifyContent={isSmallScreen ? "center" : "flex-start"}
+      justifyContent={"center"}
     >
       <CustomTextField
         label="Search"
