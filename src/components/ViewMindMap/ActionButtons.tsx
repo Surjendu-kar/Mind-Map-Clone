@@ -10,9 +10,12 @@ const ButtonsContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: theme.spacing(0.8),
   marginBottom: "0.5rem",
+  justifyContent: "center",
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
+  [theme.breakpoints.down("sm")]: {
+    flexWrap: "wrap",
+  },
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -20,7 +23,9 @@ const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.6rem",
+  },
 }));
 
 const ActionButtons = () => {

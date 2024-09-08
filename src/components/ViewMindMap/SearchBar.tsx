@@ -19,20 +19,24 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
   "& .MuiInputLabel-root": {
     fontSize: "1.1rem",
     transform: "translate(14px, 8px) scale(1)",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8789rem",
+    },
   },
   "& .MuiInputLabel-root.Mui-focused": {
     transform: "translate(12px, -6px) scale(0.75)",
   },
 
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
+  [theme.breakpoints.down("sm")]: { width: "60%" },
 }));
 
 const CustomFormControl = styled(FormControl)(({ theme }) => ({
   minWidth: "120px",
   "& .MuiOutlinedInput-input": {
     padding: "8.5px 14px",
+  },
+  "& .MuiInputLabel-root": {
+    fontSize: "0.8789rem",
   },
 
   [theme.breakpoints.down("lg")]: {},
@@ -70,7 +74,7 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <Box display="flex" alignItems="center" gap={1} mt="8px">
+    <Box display="flex" flexWrap={"wrap"} alignItems="center" gap={1} mt="8px">
       <CustomTextField
         label="Search"
         variant="outlined"

@@ -23,25 +23,24 @@ const MainContainer = styled(Box)(({ theme }) => ({
   boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
   height: "65px",
 
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
+  [theme.breakpoints.down("sm")]: {
+    justifyContent: "space-around",
+    padding: theme.spacing(0, 0, 0, 5),
+  },
 }));
 
 const InfoContainer = styled(Box)(({ theme }) => ({
   width: "40%",
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
+
+  [theme.breakpoints.down("sm")]: {
+    width: "50%",
+  },
 }));
 
 const ActionsContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: theme.spacing(1.5),
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
 }));
 
 const Heading = styled(Typography)(({ theme }) => ({
@@ -50,18 +49,18 @@ const Heading = styled(Typography)(({ theme }) => ({
   fontWeight: "500",
   fontFamily: "Poppins, sans-serif",
 
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.9rem",
+  },
 }));
 
 const Title = styled(Typography)(({ theme }) => ({
   fontSize: "0.7813rem",
   fontFamily: "Poppins, sans-serif",
 
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -72,6 +71,9 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
   "&:hover": {
     backgroundColor: `${theme.palette.primary.main}0a`,
+  },
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
   },
 }));
 
@@ -86,15 +88,19 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   "&.MuiInputBase-root": {
     fontFamily: "Poppins, sans-serif",
   },
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.675rem",
+  },
 }));
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   width: 40,
   height: 40,
   boxShadow: `0px 0px 0px 2px ${theme.palette.primary.main}`,
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
+
+  [theme.breakpoints.down("sm")]: {
+    display: "none",
+  },
 }));
 
 const StyledMenu = styled(Menu)(({ theme }) => ({
@@ -105,9 +111,6 @@ const StyledMenu = styled(Menu)(({ theme }) => ({
     boxShadow:
       "rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px",
   },
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
 }));
 
 const MenuItemBox = styled(Link)(({ theme }) => ({
@@ -125,27 +128,17 @@ const MenuItemBox = styled(Link)(({ theme }) => ({
   "& .MuiListItemIcon-root": {
     minWidth: "0px",
   },
-
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
 }));
 
-const MenuItemText = styled(Typography)(({ theme }) => ({
+const MenuItemText = styled(Typography)(() => ({
   fontSize: "1.125rem",
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
 }));
 
-const StyledListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+const StyledListItemIcon = styled(ListItemIcon)(() => ({
   "& .MuiSvgIcon-root": {
     color: "black",
     fontSize: "1.5rem",
   },
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
 }));
 
 interface HeaderProps {
