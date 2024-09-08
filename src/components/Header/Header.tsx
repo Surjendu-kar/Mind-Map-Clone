@@ -26,6 +26,10 @@ const MainContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     justifyContent: "space-around",
     padding: theme.spacing(0, 0, 0, 5),
+    position: "sticky",
+    top: 0,
+    zIndex: 1000,
+    backgroundColor: "white",
   },
 }));
 

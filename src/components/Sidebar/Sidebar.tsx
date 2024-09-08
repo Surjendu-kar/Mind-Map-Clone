@@ -44,7 +44,7 @@ const StyledDrawer = styled(Drawer, {
     },
   },
   [theme.breakpoints.down("sm")]: {
-    width: isOpen ? 270 : 0,
+    width: isOpen ? 0 : 0,
   },
 }));
 

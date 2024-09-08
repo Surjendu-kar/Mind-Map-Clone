@@ -14,6 +14,8 @@ import {
   TableContainerProps,
   Box,
   Pagination,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -76,10 +78,6 @@ const DataCellStyle = styled(Heading)<{ isSelected?: boolean }>(
     whiteSpace: "pre-wrap",
     wordBreak: "break-word",
     maxWidth: "400px",
-
-    [theme.breakpoints.down("lg")]: {},
-    [theme.breakpoints.down("md")]: {},
-    [theme.breakpoints.down("sm")]: {},
   })
 );
 
@@ -88,9 +86,6 @@ const TableCellStyle = styled(Heading)<{ isSelected?: boolean }>(
     fontWeight: "inherit",
     padding: theme.spacing(0, 1),
     border: isSelected ? `rgb(40, 114, 250) solid 1px` : "none",
-    [theme.breakpoints.down("lg")]: {},
-    [theme.breakpoints.down("md")]: {},
-    [theme.breakpoints.down("sm")]: {},
   })
 );
 
@@ -102,12 +97,9 @@ const StyledChip = styled(Chip)(() => ({
   },
 }));
 
-const DateTableCell = styled(TableCellStyle)(({ theme }) => ({
+const DateTableCell = styled(TableCellStyle)(() => ({
   fontSize: "0.7813rem",
   fontWeight: 500,
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
 }));
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
@@ -115,6 +107,11 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: theme.palette.primary.main,
   "&.delete": {
     color: theme.palette.secondary.main,
+  },
+  [theme.breakpoints.down("sm")]: {
+    "& .MuiSvgIcon-root": {
+      fontSize: "1.25rem",
+    },
   },
 }));
 
@@ -131,6 +128,44 @@ const PaginationStyle = styled(Pagination)(() => ({
   },
 }));
 
+const MobileCardContainer = styled(Box)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+    border: "1px solid #e0e0e0",
+    borderRadius: "8px",
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+  },
+}));
+
+const MobileCardContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(1),
+}));
+
+const MobileCardRow = styled(Box)(() => ({
+  display: "flex",
+  gap: "8px",
+}));
+const MobileCardValue = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  fontFamily: "Poppins, sans-serif",
+}));
+
+const ShowMoreButton = styled(Box)(({ theme }) => ({
+  fontFamily: "Poppins, sans-serif",
+  color: theme.palette.primary.main,
+  cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  fontSize: "0.875rem",
+  fontWeight: 500,
+  minWidth: "100px",
+  padding: "6px 8px",
+}));
 const DataTable = () => {
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
   const [selectedCell, setSelectedCell] = useState<string | null>(null);
@@ -183,109 +218,177 @@ const DataTable = () => {
     page * rowsPerPage
   );
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
-      <StyledTableContainer component={Paper}>
-        <StyledTable aria-label="simple table">
-          <TableHead>
-            <TableRow
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <Heading sx={{ textAlign: "left", width: "1050.4px" }}>
-                Data
-              </Heading>
-              <Heading>Source</Heading>
-              <Heading>Type</Heading>
-              <Heading>Created</Heading>
-              <Heading>Actions</Heading>
-            </TableRow>
-          </TableHead>
+      {!isMobile ? (
+        <StyledTableContainer component={Paper}>
+          <StyledTable aria-label="simple table">
+            <TableHead>
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <Heading sx={{ textAlign: "left", width: "1050.4px" }}>
+                  Data
+                </Heading>
+                <Heading>Source</Heading>
+                <Heading>Type</Heading>
+                <Heading>Created</Heading>
+                <Heading>Actions</Heading>
+              </TableRow>
+            </TableHead>
 
-          <TableBody>
-            {paginatedRows.map((row, index) => (
-              <StyledTableRow key={index}>
-                <DataCellStyle
-                  component="th"
-                  scope="row"
-                  isSelected={selectedCell === `data-${index}`}
-                  onClick={() => handleCellClick(`data-${index}`)}
-                >
-                  <>
+            <TableBody>
+              {paginatedRows.map((row, index) => (
+                <StyledTableRow key={index}>
+                  <DataCellStyle
+                    component="th"
+                    scope="row"
+                    isSelected={selectedCell === `data-${index}`}
+                    onClick={() => handleCellClick(`data-${index}`)}
+                  >
+                    <>
+                      {expandedRows.includes(index)
+                        ? row.data
+                        : row.data.slice(0, 237)}
+                      {row.data.length > 237 && (
+                        <Box>
+                          <ShowMoreTypography
+                            onClick={() => toggleRowExpansion(index)}
+                          >
+                            {expandedRows.includes(index) ? (
+                              <>
+                                SHOW LESS
+                                <KeyboardArrowUpIcon fontSize="small" />
+                              </>
+                            ) : (
+                              <>
+                                SHOW MORE
+                                <KeyboardArrowDownIcon fontSize="small" />
+                              </>
+                            )}
+                          </ShowMoreTypography>
+                        </Box>
+                      )}
+                    </>
+                  </DataCellStyle>
+
+                  <TableCellStyle
+                    isSelected={selectedCell === `source-${index}`}
+                    onClick={() => handleCellClick(`source-${index}`)}
+                  >
+                    {row.source}
+                  </TableCellStyle>
+
+                  <TableCellStyle
+                    isSelected={selectedCell === `type-${index}`}
+                    onClick={() => handleCellClick(`type-${index}`)}
+                  >
+                    <StyledChip
+                      label={row.type}
+                      variant="outlined"
+                      color="primary"
+                    />
+                  </TableCellStyle>
+
+                  <DateTableCell
+                    isSelected={selectedCell === `date-${index}`}
+                    onClick={() => handleCellClick(`date-${index}`)}
+                  >
+                    {row.created}
+                  </DateTableCell>
+
+                  <TableCellStyle
+                    isSelected={selectedCell === `actions-${index}`}
+                    onClick={() => handleCellClick(`actions-${index}`)}
+                  >
+                    <StyledIconButton
+                      aria-label="edit"
+                      sx={{ paddingRight: "8px" }}
+                      onClick={() => handleEditClick(index)}
+                    >
+                      <EditIcon />
+                    </StyledIconButton>
+
+                    <StyledIconButton
+                      aria-label="delete"
+                      className="delete"
+                      onClick={handleDeleteClick}
+                    >
+                      <DeleteIcon />
+                    </StyledIconButton>
+                  </TableCellStyle>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </StyledTable>
+        </StyledTableContainer>
+      ) : (
+        <>
+          {paginatedRows.map((row, index) => (
+            <MobileCardContainer key={index}>
+              <MobileCardContent>
+                <MobileCardRow>
+                  <MobileCardValue>
                     {expandedRows.includes(index)
                       ? row.data
-                      : row.data.slice(0, 237)}
-                    {row.data.length > 237 && (
-                      <Box>
-                        <ShowMoreTypography
-                          onClick={() => toggleRowExpansion(index)}
-                        >
-                          {expandedRows.includes(index) ? (
-                            <>
-                              SHOW LESS
-                              <KeyboardArrowUpIcon fontSize="small" />
-                            </>
-                          ) : (
-                            <>
-                              SHOW MORE
-                              <KeyboardArrowDownIcon fontSize="small" />
-                            </>
-                          )}
-                        </ShowMoreTypography>
-                      </Box>
+                      : row.data.slice(0, 50) + "..."}
+                    {row.data.length > 50 && (
+                      <ShowMoreButton onClick={() => toggleRowExpansion(index)}>
+                        {expandedRows.includes(index) ? (
+                          <>
+                            SHOW LESS
+                            <KeyboardArrowUpIcon fontSize="small" />
+                          </>
+                        ) : (
+                          <>
+                            SHOW MORE
+                            <KeyboardArrowDownIcon fontSize="small" />
+                          </>
+                        )}
+                      </ShowMoreButton>
                     )}
-                  </>
-                </DataCellStyle>
+                  </MobileCardValue>
+                </MobileCardRow>
 
-                <TableCellStyle
-                  isSelected={selectedCell === `source-${index}`}
-                  onClick={() => handleCellClick(`source-${index}`)}
-                >
-                  {row.source}
-                </TableCellStyle>
-
-                <TableCellStyle
-                  isSelected={selectedCell === `type-${index}`}
-                  onClick={() => handleCellClick(`type-${index}`)}
-                >
+                <MobileCardRow>
                   <StyledChip
                     label={row.type}
                     variant="outlined"
                     color="primary"
                   />
-                </TableCellStyle>
+                </MobileCardRow>
 
-                <DateTableCell
-                  isSelected={selectedCell === `date-${index}`}
-                  onClick={() => handleCellClick(`date-${index}`)}
-                >
-                  {row.created}
-                </DateTableCell>
+                <Box display={"flex"} justifyContent={"space-between"}>
+                  <MobileCardRow>
+                    <MobileCardValue sx={{ fontSize: "0.6rem" }}>
+                      {row.created}
+                    </MobileCardValue>
+                  </MobileCardRow>
 
-                <TableCellStyle
-                  isSelected={selectedCell === `actions-${index}`}
-                  onClick={() => handleCellClick(`actions-${index}`)}
-                >
-                  <StyledIconButton
-                    aria-label="edit"
-                    sx={{ paddingRight: "8px" }}
-                    onClick={() => handleEditClick(index)}
-                  >
-                    <EditIcon />
-                  </StyledIconButton>
-
-                  <StyledIconButton
-                    aria-label="delete"
-                    className="delete"
-                    onClick={handleDeleteClick}
-                  >
-                    <DeleteIcon />
-                  </StyledIconButton>
-                </TableCellStyle>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </StyledTable>
-      </StyledTableContainer>
+                  <MobileCardRow>
+                    <StyledIconButton
+                      aria-label="edit"
+                      onClick={() => handleEditClick(index)}
+                    >
+                      <EditIcon />
+                    </StyledIconButton>
+                    <StyledIconButton
+                      aria-label="delete"
+                      className="delete"
+                      onClick={handleDeleteClick}
+                    >
+                      <DeleteIcon />
+                    </StyledIconButton>
+                  </MobileCardRow>
+                </Box>
+              </MobileCardContent>
+            </MobileCardContainer>
+          ))}
+        </>
+      )}
 
       <PaginationContainer>
         <PaginationStyle

@@ -9,6 +9,8 @@ import {
   InputLabel,
   SelectChangeEvent,
   styled,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 
 const CustomTextField = styled(TextField)(({ theme }) => ({
@@ -30,7 +32,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: { width: "60%" },
 }));
 
-const CustomFormControl = styled(FormControl)(({ theme }) => ({
+const CustomFormControl = styled(FormControl)(() => ({
   minWidth: "120px",
   "& .MuiOutlinedInput-input": {
     padding: "8.5px 14px",
@@ -38,27 +40,22 @@ const CustomFormControl = styled(FormControl)(({ theme }) => ({
   "& .MuiInputLabel-root": {
     fontSize: "0.8789rem",
   },
-
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
 }));
 
-const BtnStyle = styled(Button)(({ theme }) => ({
+const BtnStyle = styled(Button)(() => ({
   padding: "9px 28px",
   fontSize: "0.8rem",
   fontWeight: "bold",
   ":hover": {
     background: "#333bc7",
   },
-  [theme.breakpoints.down("lg")]: {},
-  [theme.breakpoints.down("md")]: {},
-  [theme.breakpoints.down("sm")]: {},
 }));
 
 const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [resultsCount, setResultsCount] = useState<string>("3");
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSearch = (): void => {
     console.log(
@@ -74,7 +71,14 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <Box display="flex" flexWrap={"wrap"} alignItems="center" gap={1} mt="8px">
+    <Box
+      display="flex"
+      flexWrap={"wrap"}
+      alignItems="center"
+      gap={1}
+      mt="8px"
+      justifyContent={isSmallScreen ? "center" : "flex-start"}
+    >
       <CustomTextField
         label="Search"
         variant="outlined"
