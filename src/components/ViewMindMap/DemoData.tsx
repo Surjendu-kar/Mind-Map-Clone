@@ -85,5 +85,41 @@ export const useDemoData = (): DemoData[] => {
       type: "TEXT",
       created: "2/20/2024",
     },
+    {
+      data: "What will happen during the onboarding process? During the onboarding process, our experts will understand your business needs and try to understand how you want your chatbot to respond. Then they will build the chatbot and share the code within a day. [Book Call Now](https://calendly.com/beyondchats/15min)",
+      source: "--",
+      type: "TEXT",
+      created: "2/20/2024",
+    },
+    {
+      data: "Registration link? To register for the free trial book an onboarding call with our team. The team will share the next steps of the registration in the call. Book Call Now",
+      source: "--",
+      type: "TEXT",
+      created: "6/8/2024",
+    },
+    {
+      data: "What kind of analytics and reporting features does the chatbot offer?\n Daily: Leads stats + audience segmentation based on buying intent of users\n Weekly & Monthly: Leads stats, Top questions asked by users, Useful Sales Intelligence Analytics",
+      source: "--",
+      type: "TEXT",
+      created: "2/9/2024",
+    },
+    {
+      data: "in which company you have provided your chatbot We have provided our chatbot services to various companies across different industries. These include: MultiBhashi, Selligion, drmalpani. com, indianangel. in May I know which company / industry are you coming from?",
+      source: "--",
+      type: "TEXT",
+      created: "2/15/2024",
+    },
+    {
+      data: "Can I cancel my subscription at any time? You may cancel your subscription to BeyondChats at any time. The cancellation will become effective at the end of your current billing cycle. Upon cancellation, your service will remain active until the end of your paid billing term.",
+      source: "--",
+      type: "TEXT",
+      created: "6/8/2024",
+    },
+    {
+      data: "What are the pricing plans of BeyondChats? We offer 3 different plans: Individual Plan at Rs 1,000 only, Startup Plan at Rs 8,000 only, and Enterprise Plan price based on your requirements. You can subscribe to the paid plans in a monthly or an annual billing cycle. [Know More](https://beyondchats.com/)",
+      source: "--",
+      type: "TEXT",
+      created: "2/20/2024",
+    },
   ];
 };
