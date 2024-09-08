@@ -11,6 +11,18 @@ import {
   styled,
 } from "@mui/material";
 
+const MainContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: theme.spacing(1),
+  marginTop: theme.spacing(0.8),
+  
+  [theme.breakpoints.down("sm")]: {
+    flexWrap: "wrap",
+  },
+}));
+
 const CustomTextField = styled(TextField)(({ theme }) => ({
   width: "100%",
   "& .MuiInputBase-input": {
@@ -67,14 +79,7 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <Box
-      display="flex"
-      flexWrap={"wrap"}
-      alignItems="center"
-      gap={1}
-      mt="8px"
-      justifyContent={"center"}
-    >
+    <MainContainer>
       <CustomTextField
         label="Search"
         variant="outlined"
@@ -99,7 +104,7 @@ const SearchBar: React.FC = () => {
       <BtnStyle variant="contained" color="primary" onClick={handleSearch}>
         Search
       </BtnStyle>
-    </Box>
+    </MainContainer>
   );
 };
 
