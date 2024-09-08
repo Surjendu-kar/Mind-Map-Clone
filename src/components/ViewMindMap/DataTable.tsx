@@ -13,6 +13,7 @@ import {
   styled,
   TableContainerProps,
   Box,
+  Pagination,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -117,12 +118,25 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
+const PaginationContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  margin: theme.spacing(0.8, 0),
+}));
+
+const PaginationStyle = styled(Pagination)(() => ({
+  "& .MuiPaginationItem-root": {
+    fontSize: "1rem",
+    borderRadius: "16px",
+  },
+}));
 const DataTable = () => {
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
   const [selectedCell, setSelectedCell] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [addDataDialogOpen, setAddDataDialogOpen] = useState(false);
   const [editingData, setEditingData] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
   const toggleRowExpansion = (index: number) => {
     setExpandedRows((prev) =>
@@ -156,7 +170,17 @@ const DataTable = () => {
     setEditingData(null);
   };
 
+  const handleChangePage = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const rowsPerPage = 10;
   const rows = useDemoData();
+  const totalPages = Math.ceil(rows.length / rowsPerPage);
+  const paginatedRows = rows.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
 
   return (
     <>
@@ -177,7 +201,7 @@ const DataTable = () => {
           </TableHead>
 
           <TableBody>
-            {rows.map((row, index) => (
+            {paginatedRows.map((row, index) => (
               <StyledTableRow key={index}>
                 <DataCellStyle
                   component="th"
@@ -261,6 +285,16 @@ const DataTable = () => {
           </TableBody>
         </StyledTable>
       </StyledTableContainer>
+
+      <PaginationContainer>
+        <PaginationStyle
+          count={totalPages}
+          page={page}
+          onChange={(_, newPage) => handleChangePage(newPage)}
+          color="primary"
+          shape="rounded"
+        />
+      </PaginationContainer>
 
       <DeleteConfirmationDialog
         open={deleteDialogOpen}

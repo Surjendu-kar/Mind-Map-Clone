@@ -67,5 +67,23 @@ export const useDemoData = (): DemoData[] => {
       type: "TEXT",
       created: "8/14/2024",
     },
+    {
+      data: "Who founded beyondchats? The founders of BeyondChats are Pankaj Baranwal and Simran Jain.",
+      source: "--",
+      type: "TEXT",
+      created: "2/20/2024",
+    },
+    {
+      data: "How do I get started?\n To get started schedule an onboarding connect with our experts. They will understand your business and help you integrate the chatbot in 2 minutes.\n\n Schedule a short 15-minutes connect with one of our experts [here](https://calendly.com/beyondchats/15min)",
+      source: "--",
+      type: "TEXT",
+      created: "2/17/2024",
+    },
+    {
+      data: "Why chose you We are not just a conversational chatbot. Our AI builds trust with users and nudges them towards business actions like buying product, requesting demo, etc.",
+      source: "--",
+      type: "TEXT",
+      created: "2/20/2024",
+    },
   ];
 };
