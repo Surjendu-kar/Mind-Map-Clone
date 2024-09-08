@@ -130,6 +130,7 @@ const PaginationStyle = styled(Pagination)(() => ({
     borderRadius: "16px",
   },
 }));
+
 const DataTable = () => {
   const [expandedRows, setExpandedRows] = useState<number[]>([]);
   const [selectedCell, setSelectedCell] = useState<string | null>(null);

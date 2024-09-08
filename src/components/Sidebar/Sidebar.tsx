@@ -19,7 +19,7 @@ const drawerWidth = 240;
 interface OpenProps {
   isOpen: boolean;
 }
-interface ActiveProps {
+interface ActiveProps extends OpenProps {
   active: boolean;
 }
 
@@ -43,6 +43,10 @@ const StyledDrawer = styled(Drawer, {
   [theme.breakpoints.down("sm")]: {},
 }));
 
+const StyledList = styled(List)(() => ({
+  padding: "2px 0",
+}));
+
 const Menu = styled(ListItem, {
   shouldForwardProp: (prop) => prop !== "isOpen",
 })<OpenProps>(({ theme, isOpen }) => ({
@@ -50,6 +54,7 @@ const Menu = styled(ListItem, {
   minHeight: "64px",
   padding: "0px 8px",
   justifyContent: isOpen ? "flex-end" : "center",
+  borderBottom: `1px solid ${theme.palette.divider}`,
 
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
@@ -67,11 +72,11 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 }));
 
 const StyledListItem = styled(Link, {
-  shouldForwardProp: (prop) => prop !== "active",
-})<ActiveProps>(({ theme, active }) => ({
+  shouldForwardProp: (prop) => prop !== "active" && prop !== "isOpen",
+})<ActiveProps>(({ theme, active, isOpen }) => ({
   display: "flex",
   alignItems: "center",
-  padding: "8px 20px",
+  padding: isOpen ? "8px 20px" : "0px 20px",
   textDecoration: "none",
   color: theme.palette.text.primary,
   backgroundColor: active ? `#e3f2ff` : "transparent",
@@ -95,7 +100,7 @@ const Sidebar = () => {
 
   return (
     <StyledDrawer variant="permanent" isOpen={open}>
-      <List>
+      <StyledList>
         <Menu disablePadding isOpen={open}>
           <Tooltip
             title={open ? "Close Left Drawer" : "Open Left Drawer"}
@@ -123,7 +128,7 @@ const Sidebar = () => {
               arrow
               disableHoverListener={open}
             >
-              <StyledListItem active={isActive} to={item.path}>
+              <StyledListItem active={isActive} isOpen={open} to={item.path}>
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
@@ -144,7 +149,7 @@ const Sidebar = () => {
             </Tooltip>
           );
         })}
-      </List>
+      </StyledList>
     </StyledDrawer>
   );
 };
