@@ -90,6 +90,13 @@ const StyledListItem = styled(Link, {
   [theme.breakpoints.down("sm")]: {},
 }));
 
+const StyledListItemText = styled(ListItemText)(() => ({
+  "& .MuiTypography-root": {
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: "1rem",
+  },
+}));
+
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -141,9 +148,12 @@ const Sidebar = () => {
                 >
                   <Icon />
                 </ListItemIcon>
-                <ListItemText
+                <StyledListItemText
                   primary={item.text}
-                  sx={{ opacity: open ? 1 : 0, transition: "opacity 0.2s" }}
+                  sx={{
+                    opacity: open ? 1 : 0,
+                    transition: "opacity 0.2s",
+                  }}
                 />
               </StyledListItem>
             </Tooltip>

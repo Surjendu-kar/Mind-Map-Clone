@@ -29,7 +29,7 @@ const MainContainer = styled(Box)(({ theme }) => ({
 }));
 
 const InfoContainer = styled(Box)(({ theme }) => ({
-  width: "35%",
+  width: "40%",
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
   [theme.breakpoints.down("sm")]: {},
@@ -45,9 +45,11 @@ const ActionsContainer = styled(Box)(({ theme }) => ({
 }));
 
 const Heading = styled(Typography)(({ theme }) => ({
-  fontSize: "1.4rem",
+  fontSize: "1.5rem",
   lineHeight: 1.167,
-  fontWeight: "bold",
+  fontWeight: "500",
+  fontFamily: "Poppins, sans-serif",
+
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
   [theme.breakpoints.down("sm")]: {},
@@ -55,6 +57,8 @@ const Heading = styled(Typography)(({ theme }) => ({
 
 const Title = styled(Typography)(({ theme }) => ({
   fontSize: "0.7813rem",
+  fontFamily: "Poppins, sans-serif",
+
   [theme.breakpoints.down("lg")]: {},
   [theme.breakpoints.down("md")]: {},
   [theme.breakpoints.down("sm")]: {},
@@ -64,6 +68,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
   borderColor: theme.palette.primary.main,
   color: theme.palette.primary.main,
   padding: theme.spacing(0.7, 1.5),
+  fontFamily: "Poppins, sans-serif",
+
   "&:hover": {
     backgroundColor: `${theme.palette.primary.main}0a`,
   },
@@ -76,6 +82,9 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   "& .MuiSvgIcon-root": {
     fontSize: "20px",
     color: theme.palette.primary.main,
+  },
+  "&.MuiInputBase-root": {
+    fontFamily: "Poppins, sans-serif",
   },
 }));
 
